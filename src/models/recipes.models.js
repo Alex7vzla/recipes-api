@@ -67,6 +67,8 @@ const Recipes = db.define('recipes', {
         allowNull: false,
         defaultValue: 0
     }
+}, {
+    timestamps: false
 })
 
 module.exports = Recipes;
