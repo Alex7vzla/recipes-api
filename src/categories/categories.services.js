@@ -44,3 +44,25 @@ const postCategory = (req, res) => {
         })
     }
 };
+
+const deleteCategory = (req, res) => {
+    const id = req.params.id;
+    categoriesControllers.deleteCategorie(id)
+        .then(data => {
+            if(data){
+                res.status(200).json(data)
+            }else{
+                res.status(404).json({message:'Invalid ID'})
+            }
+        })
+        .catch(err => {
+            res.status(400).json({message: err.message})
+        })
+};
+
+module.exports = {
+    getAllCategories,
+    getCategorieById,
+    postCategory,
+    deleteCategory
+}
