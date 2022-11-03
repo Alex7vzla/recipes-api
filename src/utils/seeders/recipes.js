@@ -1,4 +1,4 @@
-const Recipes = require('../../models/recipes.models')
+const Recipes = require('../../models/recipes.models');
 
 Recipes.bulkCreate([
     {

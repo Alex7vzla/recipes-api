@@ -1,12 +1,13 @@
-const uuid = require('uuid')
-const Recipes = require('../models/recipes.models')
-const Users = require('../models/users.models')
-const Categories = require('../models/categories.models')
-const Instructions = require('../models/instructions.models')
-const ingredientsRecipes = require('../models/ingredients_recipes.models')
-const Ingredients = require('../models/ingredients.models')
-const Types = require('../models/types.models')
-
+const uuid = require('uuid');
+const {Op} = require('sequelize');
+const Recipes = require('../models/recipes.models');
+const Users = require('../models/users.models');
+const Categories = require('../models/categories.models');
+const Instructions = require('../models/instructions.models');
+const ingredientsRecipes = require('../models/ingredients_recipes.models');
+const Ingredients = require('../models/ingredients.models');
+const Types = require('../models/types.models');
+const IngredientsRecipes = require('../models/ingredients_recipes.models');
 
 const getAllRecipes = async () => {
     const data = await Recipes.findAll({
@@ -36,8 +37,8 @@ const getAllRecipes = async () => {
             }
         ]
     })
-    return data
-}
+    return data;
+};
 
 const getRecipeById = async (id) => {
     const data = await Recipes.findOne({
@@ -45,8 +46,8 @@ const getRecipeById = async (id) => {
             id
         }
     })
-    return data
-}
+    return data;
+};
 
 const createRecipe = async (data) => {
     const response = await Recipes.create({
@@ -61,8 +62,8 @@ const createRecipe = async (data) => {
         origin: data.origin,
         likes: data.likes
     })
-    return response
-}
+    return response;
+};
 
 const updateRecipe = async (id, data) => {
     const response = await Recipes.update(data, {
@@ -70,8 +71,8 @@ const updateRecipe = async (id, data) => {
             id
         }
     })
-    return response
-}
+    return response;
+};
 
 const deleteRecipe = async (id) => {
     const data = await Recipes.destroy({
@@ -79,13 +80,43 @@ const deleteRecipe = async (id) => {
             id
         }
     })
-    return data
-}
+    return data;
+};
+
+const getMyRecipes = async(userId) => {
+    const userIngredients = await UsersIngredients.findAll({
+        attributes: ['ingredientId'],
+        where: {
+            userId
+        }
+    })
+    const filteredIngredients = userIngredients.map(obj => obj.ingredientId)
+    const ingredientsRecipes = await IngredientsRecipes.findAll({
+        where: {
+            ingredientId: {
+                [Op.in]: filteredIngredients
+            }
+        }
+    })
+
+    const filteredRecipes = ingredientsRecipes.map(obj => obj.recipeId)
+
+    const data = await Recipes.findAll({
+        where: {
+            id: {
+                [Op.in]: filteredRecipes
+            }
+        }
+    })
+
+    return data;
+};
 
 module.exports = {
     getAllRecipes,
     getRecipeById,
     createRecipe,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    getMyRecipes
 }

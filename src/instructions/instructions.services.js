@@ -1,4 +1,4 @@
-const instructionControllers = require('./instructions.controller')
+const instructionControllers = require('./instructions.controller');
 
 const getAllInstructions = (req, res) => {
     instructionControllers.getAllInstructions()
@@ -8,7 +8,7 @@ const getAllInstructions = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
+};
 
 const getInstructionById = (req, res) => {
     const id = req.params.instruction_id
@@ -23,11 +23,10 @@ const getInstructionById = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
+};
 
 const postInstruction = (req, res) => {
-    const {description, step, recipeId} = req.body
-
+    const {description, step, recipeId} = req.body;
     if(description && step && recipeId){
         instructionControllers.createInstruction({
             description, step, recipeId
@@ -48,12 +47,11 @@ const postInstruction = (req, res) => {
             }
         })
     }
-}
-
+};
 
 const patchInstruction = (req, res) => {
-    const { description, step, recipeId } = req.body
-    const id = req.params.instruction_id
+    const { description, step, recipeId } = req.body;
+    const id = req.params.instruction_id;
     instructionControllers.updateInstruction(id, {description, step, recipeId})
         .then(data => {
             if(data[0]){
@@ -65,11 +63,10 @@ const patchInstruction = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })  
-}
+};
 
 const deleteInstruction = (req, res) => {
-    const id = req.params.instruction_id
-
+    const id = req.params.instruction_id;
     instructionControllers.deleteInstruction(id)
         .then(data => {
             if(data){
@@ -81,8 +78,7 @@ const deleteInstruction = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
-
+};
 
 module.exports = {
     postInstruction,

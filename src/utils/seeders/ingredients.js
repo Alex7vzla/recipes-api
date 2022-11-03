@@ -1,5 +1,4 @@
-const Ingredients = require('../../models/ingredients.models')
-
+const Ingredients = require('../../models/ingredients.models');
 
 Ingredients.bulkCreate([
     {

@@ -1,4 +1,4 @@
-const ingredientControllers = require('./ingredients.controller')
+const ingredientControllers = require('./ingredients.controller');
 
 const getAllIngredients = (req, res) => {
     ingredientControllers.getAllIngredients()
@@ -8,7 +8,7 @@ const getAllIngredients = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
+};
 
 const getIngredientById = (req, res) => {
     const id = req.params.ingredient_id
@@ -23,7 +23,7 @@ const getIngredientById = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
+};
 
 const postIngredient = (req, res) => {
     const {name, typeId, urlImg} = req.body
@@ -48,8 +48,7 @@ const postIngredient = (req, res) => {
             }
         })
     }
-}
-
+};
 
 const patchIngredient = (req, res) => {
     const { name, typeId, urlImg } = req.body
@@ -65,7 +64,7 @@ const patchIngredient = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })  
-}
+};
 
 const deleteIngredient = (req, res) => {
     const id = req.params.ingredient_id
@@ -81,15 +80,38 @@ const deleteIngredient = (req, res) => {
         .catch(err => {
             res.status(400).json({message: err.message})
         })
-}
+};
 
+const ingredientToUser = (req, res) => {
+    const userId = req.user.id;
+    const { amount } = req.body;
+    const ingredientId = req.params.ingredient_id;
+
+    if(amount){
+        ingredientControllers.addIngredientToUser({userId, ingredientId, amount})
+            .then(data => {
+                res.status(201).json(data)
+            })
+            .catch(err => {
+                res.status(404).json({message: err.message})
+            })
+    }else{
+        res.status(400).json({
+            message: 'Missing Data',
+            fields: {
+                amount: 'string'
+            }
+        })
+    }
+};
 
 module.exports = {
     getAllIngredients,
     getIngredientById,
     postIngredient,
     patchIngredient,
-    deleteIngredient
+    deleteIngredient,
+    ingredientToUser
 }
 
 

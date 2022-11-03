@@ -1,7 +1,5 @@
-const uuid = require('uuid')
-
-const Instructions = require('../../models/instructions.models')
-
+const uuid = require('uuid');
+const Instructions = require('../../models/instructions.models');
 
 Instructions.bulkCreate([
     {

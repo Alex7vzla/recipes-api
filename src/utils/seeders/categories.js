@@ -1,5 +1,4 @@
-
-const Categories = require('../../models/categories.models')
+const Categories = require('../../models/categories.models');
 
 Categories.bulkCreate([
     {id: 1,name: 'Postres'},

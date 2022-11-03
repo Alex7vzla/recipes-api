@@ -4,8 +4,6 @@ const typeServices = require("./types.services");
 const adminMiddleware = require("../middlewares/role.middleware");
 
 require("../middlewares/auth.middleware")(passport);
-//? /
-//? /:id
 
 router.route("/")
   .get(typeServices.getAllTypes)

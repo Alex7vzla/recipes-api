@@ -1,7 +1,6 @@
-const uuid = require('uuid')
-const {faker} = require('@faker-js/faker')
-
-const Users = require('../../models/users.models')
+const uuid = require('uuid');
+const {faker} = require('@faker-js/faker');
+const Users = require('../../models/users.models');
 
 for(let i = 0; i < 10; i++){
     Users.create(

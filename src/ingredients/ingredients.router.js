@@ -1,14 +1,9 @@
-const router = require('express').Router()
-const passport = require('passport')
-const adminMiddleware = require('../middlewares/role.middleware')
+const router = require('express').Router();
+const passport = require('passport');
+const adminMiddleware = require('../middlewares/role.middleware');
 
-const ingredientServices = require('./ingredients.services')
-require('../middlewares/auth.middleware')(passport)
-
-
-
-//? /ingredients 
-//? /ingredients/:ingredient_id
+const ingredientServices = require('./ingredients.services');
+require('../middlewares/auth.middleware')(passport);
 
 router.route('/')
     .get(ingredientServices.getAllIngredients)
@@ -31,4 +26,4 @@ router.route('/:ingredient_id')
         ingredientServices.deleteIngredient
     )
 
-module.exports = router
+module.exports = router;

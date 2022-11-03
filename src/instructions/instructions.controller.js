@@ -1,11 +1,10 @@
-const uuid = require('uuid')
-
-const Instructions = require('../models/instructions.models')
+const uuid = require('uuid');
+const Instructions = require('../models/instructions.models');
 
 const getAllInstructions = async() => {
     const data = await Instructions.findAll()
-    return data
-}
+    return data;
+};
 
 const getInstructionById = async (id) => {
     const data = await Instructions.findOne({
@@ -13,8 +12,8 @@ const getInstructionById = async (id) => {
             id
         }
     })
-    return data
-}
+    return data;
+};
 
 const createInstruction = async (data) => {
     const response = await Instructions.create({
@@ -23,8 +22,8 @@ const createInstruction = async (data) => {
         step: data.step,
         recipeId: data.recipeId
     })
-    return response
-}
+    return response;
+};
 
 const updateInstruction = async (id, data) => {
     const response = await Instructions.update(data, {
@@ -32,8 +31,8 @@ const updateInstruction = async (id, data) => {
             id
         }
     })
-    return response
-}
+    return response;
+};
 
 const deleteInstruction = async (id) => {
     const data = await Instructions.destroy({
@@ -41,9 +40,8 @@ const deleteInstruction = async (id) => {
             id
         }
     })
-    return data
-}
-
+    return data;
+};
 
 module.exports = {
     createInstruction,

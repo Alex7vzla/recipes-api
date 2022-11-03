@@ -1,11 +1,10 @@
-const uuid = require('uuid')
-
-const Ingredients = require('../models/ingredients.models')
+const uuid = require('uuid');
+const Ingredients = require('../models/ingredients.models');
 
 const getAllIngredients = async() => {
     const data = await Ingredients.findAll()
-    return data
-}
+    return data;
+};
 
 const getIngredientById = async (id) => {
     const data = await Ingredients.findOne({
@@ -13,8 +12,8 @@ const getIngredientById = async (id) => {
             id
         }
     })
-    return data
-}
+    return data;
+};
 
 const createIngredient = async (data) => {
     const response = await Ingredients.create({
@@ -23,8 +22,8 @@ const createIngredient = async (data) => {
         typeId: data.typeId,
         urlImg: data.urlImg
     })
-    return response
-}
+    return response;
+};
 
 const updateIngredient = async (id, data) => {
     const response = await Ingredients.update(data, {
@@ -32,8 +31,8 @@ const updateIngredient = async (id, data) => {
             id
         }
     })
-    return response
-}
+    return response;
+};
 
 const deleteIngredient = async (id) => {
     const data = await Ingredients.destroy({
@@ -41,14 +40,24 @@ const deleteIngredient = async (id) => {
             id
         }
     })
-    return data
-}
+    return data;
+};
 
+const addIngredientToUser = async(data) => {
+    const response = await UsersIngredients.create({
+        id: uuid.v4(),
+        amount: data.amount,
+        userId: data.userId,
+        ingredientId: data.ingredientId
+    })
+    return response;
+};
 
 module.exports = {
     getAllIngredients,
     getIngredientById,
     createIngredient,
     updateIngredient,
-    deleteIngredient
+    deleteIngredient,
+    addIngredientToUser
 }
