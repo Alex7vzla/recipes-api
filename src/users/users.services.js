@@ -106,8 +106,7 @@ const deleteUser = (req, res) => {
     });
 };
 
-//? My user services
-
+// My user services
 const getMyUser = (req, res) => {
   const id = req.user.id; //? req.user contiene la informacion del token desencriptado
 
@@ -120,8 +119,6 @@ const getMyUser = (req, res) => {
       res.status(400).json({ message: err.message });
     });
 };
-
-// TODO crear rutas protegidas /me, con los verbos para update y delete
 
 const patchMyUser = (req, res) => {
   const id = req.user.id;
@@ -136,10 +133,6 @@ const patchMyUser = (req, res) => {
       res.status(400).json({ message: err.message });
     });
 };
-
-//? 2 tipos de delete:
-//* 1. por administrador
-//* 2. por mi mismo
 
 const deleteMyUser = (req, res) => {
   const id = req.user.id;

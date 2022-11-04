@@ -1,11 +1,8 @@
-const router = require('express').Router()
-const passport = require('passport')
+const router = require('express').Router();
+const passport = require('passport');
 
-const recipeServices = require('./recipes.services')
-require('../middlewares/auth.middleware')(passport)
-
-//? /recipes 
-//? /recipes/:recipe_id
+const recipeServices = require('./recipes.services');
+require('../middlewares/auth.middleware')(passport);
 
 router.route('/')
     .get(recipeServices.getAllRecipes)
@@ -25,4 +22,4 @@ router.route('/:recipe_id')
         recipeServices.deleteRecipe
     )
 
-module.exports = router
+module.exports = router;

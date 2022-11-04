@@ -4,10 +4,10 @@ const Recipes = require('../models/recipes.models');
 const Users = require('../models/users.models');
 const Categories = require('../models/categories.models');
 const Instructions = require('../models/instructions.models');
-const ingredientsRecipes = require('../models/ingredients_recipes.models');
+const IngredientsRecipes = require('../models/ingredients_recipes.models');
 const Ingredients = require('../models/ingredients.models');
 const Types = require('../models/types.models');
-const IngredientsRecipes = require('../models/ingredients_recipes.models');
+const IngredientsUsers = require('../models/ingredients_users.models');
 
 const getAllRecipes = async () => {
     const data = await Recipes.findAll({
@@ -27,7 +27,7 @@ const getAllRecipes = async () => {
                 attributes: ['step', 'description']
             },
             {
-                model: ingredientsRecipes,
+                model: IngredientsRecipes,
                 include: {
                     model: Ingredients,
                     include: {
@@ -44,7 +44,32 @@ const getRecipeById = async (id) => {
     const data = await Recipes.findOne({
         where: {
             id
-        }
+        },
+        attributes: {
+            exclude: ['userId', 'categoryId', 'createdAt', 'updatedAt']
+        },
+        include: [
+            {
+                model: Categories
+            },
+            {
+                model: Users,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: Instructions,
+                attributes: ['step', 'description']
+            },
+            {
+                model: IngredientsRecipes,
+                include: {
+                    model: Ingredients,
+                    include: {
+                        model: Types
+                    }
+                }
+            }
+        ]
     })
     return data;
 };
@@ -84,7 +109,7 @@ const deleteRecipe = async (id) => {
 };
 
 const getMyRecipes = async(userId) => {
-    const userIngredients = await UsersIngredients.findAll({
+    const userIngredients = await IngredientsUsers.findAll({
         attributes: ['ingredientId'],
         where: {
             userId
